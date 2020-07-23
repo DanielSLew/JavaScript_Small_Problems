@@ -1,0 +1,29 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+fieldset {
+  box-sizing: border-box;
+  display: flex;
+  border: double grey;
+  padding: 15px 100px;
+  color: red;
+}
+
+.valid-input {
+  background: yellow;
+}
+
+button {
+  margin-top: 30px;
+  padding: 25px 50px;
+  background: red;
+  border-radius: 7px;
+  font-color: white;
+  color: white;
+}

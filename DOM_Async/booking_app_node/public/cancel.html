@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cancel Schedules or Bookings</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <form id="bookingForm">
+      <label>
+        Cancel Booking
+        <select name="bookings">
+        </select>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+
+    <form id="scheduleForm">
+      <label>
+        Cancel Schedule
+        <select name="schedules">
+        </select>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+<script>
+function get(url) {
+  return new Promise(resolve => {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/' + url);
+    xhr.responseType = 'json';
+    xhr.onload = () => resolve(xhr.response);
+    xhr.send();
+  });
+}
+
+function createCancelEvent(type, method) {
+  return function(id) {
+    return new Promise(resolve => {
+      let xhr = new XMLHttpRequest();
+      xhr.open(method, `http://localhost:3000/api/${type}/${id}`);
+      xhr.send();
+      xhr.onload = () => {
+        alert(xhr.status === 204 ? 'Successfully cancelled' : xhr.response);
+        if (xhr.status === 204) window.location.reload(true);
+        resolve();
+      }
+    });
+  }
+}
+
+function createInitialDataLists(schedules, selectBookings, selectSchedules) {
+  schedules.forEach(schedule => {
+    let info     = [schedule.student_email, schedule.date, schedule.time]
+    let option   = document.createElement('option');
+    option.value = schedule.id;
+
+    if (info[0]) {
+      option.textContent = info.join(' | ');
+      selectBookings.appendChild(option);
+    } else {
+      option.textContent = info.slice(1).join(' | ');
+      selectSchedules.appendChild(option)
+    }
+  });
+}
+
+const cancelBooking  = createCancelEvent('bookings', 'PUT',);
+const cancelSchedule = createCancelEvent('schedules', 'DELETE');
+
+(async function() {
+  const schedules = await get('schedules');
+
+  const bookingForm     = document.querySelector('#bookingForm');
+  const selectBookings  = bookingForm.querySelector('select');
+  const bookingButton   = bookingForm.querySelector('button');
+
+  const scheduleForm    = document.querySelector('#scheduleForm');
+  const selectSchedules = scheduleForm.querySelector('select');
+  const scheduleButton  = scheduleForm.querySelector('button');
+
+  createInitialDataLists(schedules, selectBookings, selectSchedules);
+
+  scheduleButton.onclick = async () => {
+    event.preventDefault();
+    await cancelSchedule(selectSchedules.value);
+  }
+
+  bookingButton.onclick = async () => {
+    event.preventDefault();
+    await cancelBooking(selectBookings.value);
+  }
+})();
+</script>
+  </body>
+</html>
+

@@ -1,0 +1,42 @@
+body {
+  background-color: grey;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+}
+
+p {
+  display: inline-block;
+  font-size: 1.5rem;
+}
+
+#timer {
+  background-color: yellow;
+  border-radius: 10px
+}
+
+.controls, #timer, #reset {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 100px 30%;
+}
+
+button {
+  width: 100px;
+  height: 30px;
+}
+
+#start {
+  background-color: green;
+  color: white;
+}
+
+#stop {
+  background-color: red;
+  color: white;
+  display: none;
+
+}

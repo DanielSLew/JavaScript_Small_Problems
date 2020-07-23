@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Todo List</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+  </head>
+  <body>
+    <h1>Todo List</h1>
+
+    <div id="todos">
+    </div>
+
+    <div id="overlay">
+      <div id="confirmation">
+        <p>Are you sure you want to delete this todo?</p>
+        <button>No</button>
+        <button id="delete">Yes</button>
+      </div>
+    </div>
+
+    <div id="contextMenu">
+      <ul>
+        <li>Edit Todo</li>
+        <li>Show Todo</li>
+        <li class="delete">Delete Todo</li>
+      </ul>
+    </div>
+
+    <script id="todo_items" type="text/x-handlebars">
+      {{#each todos}}
+        <div data-id="{{id}}">
+          <p data-id="{{id}}">{{title}}</p>
+        </div>
+      {{/each}}
+    </script>
+    <script src="javascript.js"></script>
+  </body>
+</html>

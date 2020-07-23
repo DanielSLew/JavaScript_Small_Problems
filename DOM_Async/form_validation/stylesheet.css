@@ -1,0 +1,73 @@
+body {
+  background-color: lightyellow;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 100px
+}
+
+form {
+  width: 30%;
+  background-color: lavender;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+label {
+  margin: 10px 10px 10px 0;
+  padding-left: 10px;
+}
+
+input {
+  width: 90%;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: palegreen;
+  border-radius: 10px;
+  border: solid black 1px;
+  margin-top: 10px;
+}
+
+.error {
+  border-color: red;
+}
+
+#error_message {
+  font-size: 11px;
+  display: none;
+  align-items: center;
+  color: white;
+  box-sizing: border-box;
+  height: 21px;
+  padding: 0 5px;
+  position: fixed;
+  background-color: crimson;
+  min-width: 100px;
+  border: solid black 1px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#form_error {
+  display: none;
+  background-color: crimson;
+  color: white;
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: -32px;
+}
+
+input[name="credit_card"] {
+  width: 18%;
+  margin-right: 0;
+}
+

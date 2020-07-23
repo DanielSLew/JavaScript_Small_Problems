@@ -1,0 +1,201 @@
+// Logical Operation
+
+// What will each line of the follow code return?
+
+(false && undefined);                           // false
+(false || undefined);                           // undefined
+((false && undefined) || (false || undefined)); // undefined
+((false || undefined) || (false && undefined)); // false
+((false && undefined) && (false || undefined)); // false
+((false || undefined) && (false && undefined)); // undefined
+('a' || (false && undefined) || '');            // 'a'
+((false && undefined) || 'a' || '');            // 'a'
+('a' && (false || undefined) && '');            // undefined
+((false || undefined) && 'a' && '');            // undefined
+
+// Conditional Loop
+
+// The following program is expected to log each num between 0 and 9 inclusive
+// That is multiple of 3, will the follow code work?
+
+var i = 0;
+while (i < 10) {
+  if (i % 3 === 0) {
+    console.log(i);
+  } else {
+    i += 1;
+  }
+}
+
+// The following code will not work because it does no increment i in the case
+// that i % 3 === 0 is true. And this will always be true. So the program will log 0 infinintely.
+
+// Multiplication Table
+
+// The follow program is expected to log a multiplication table for nums from 1 to 10
+// Will the code work?
+
+var row;
+var i;
+var j;
+
+function padLeft(number) {
+  var stringNumber = String(number);
+  return stringNumber.length <= 1 ? ' ' + stringNumber : stringNumber;
+}
+
+for (i = 1; i < 10; i += 1) {
+  row = '';
+  for (j = 1; j <= 10; j += 1) {
+    row += padLeft(i * j) + ' ';
+  }
+
+  console.log(row + '\n');
+}
+
+// The follow code will work to produce the results but it will only print the numbers
+// From 1 to 9 not including 10, we need to change i < 10 to 1 <= 10.
+
+// Selected Columns
+
+// The getSelectedColumns functions selects and extracts specific columns to new array
+// The function is not producing the expected result
+// What is the problem?
+
+function getSelectedColumns(numbers, cols) {
+  var result = [];
+
+  for (var i = 0, length = numbers.length; i < length; i += 1) {
+    for (var j = 0, length = cols.length; j < length; j += 1) {
+      if (!result[j]) {
+        result[j] = [];
+      }
+
+      result[j][i] = numbers[i][cols[j]];
+    }
+  }
+
+  return result;
+}
+
+// given the following arrays of number arrays
+var array1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+var array2 = [[1, 2, 3], [1, 2, 3], [1, 2, 3]];
+
+// `array1` in row/column format
+// [[1, 2, 3],
+//  [4, 5, 6],
+//  [7, 8, 9]]
+
+getSelectedColumns(array1, [0]);     // [[1]];            expected: [[1, 4, 7]]
+getSelectedColumns(array1, [0, 2]);  // [[1, 4], [3, 6]]; expected: [[1, 4, 7], [3, 6, 9]]
+getSelectedColumns(array2, [1, 2]);  // [[2, 2], [3, 3]]; expected: [[2, 2, 2], [3, 3, 3]]
+
+// The length variable in the second for statement reassigns length to the length
+// of cols, so if the length of cols is less than the length of numbers, the iterations
+// will stop short. We need to have a variable with a different name for cols.length
+
+// Counter
+
+// What will the follow code snippets log?
+
+// Code Snippet 1
+var counter = 5;
+var rate = 3;
+console.log('The total value is ' + String(counter * rate));
+
+function counter(count) {
+  // ...
+}
+// function counter gets hoisted above the variable declarations
+// And then counter is reassigned from a function to a reference to value 5
+// So this will log 'The total value is 15'
+
+// Code Snippet 2
+function counter(count) {
+  // ...
+}
+
+console.log('The total value is ' + String(counter * rate));
+
+var counter = 5;
+var rate = 3;
+// The variable declarations get hoisted, so counter and rate are both referencing
+// undeclared, and when those are multiplied we get NaN
+// It will log 'The total value is NaN'
+
+// Code Snippet 3
+var counter = 5;
+var rate = 3;
+
+function counter(count) {
+  // ...
+}
+
+console.log('The total value is ' + String(counter * rate));
+// This is effectively the same as code snippet 1, functions and variable declarations get hoisted
+// so it will log 'The total value is 15'
+
+// Logger
+// Why will the following code log 'debugging'
+
+function debugIt() {
+  var status = 'debugging';
+  function logger() {
+    console.log(status);
+  }
+
+  logger();
+}
+
+debugIt();
+
+// Inside the debugIt function, the logger function is hoisted above
+// the assignment for status. So when logger is invoked, status holds the reference
+// to the string value 'debugging' and will therefore log it.
+
+// Invoice
+
+// The invoiceTotal function computes the total amount for an invoice containing
+// four "line items" how can we refactor the function so it will work with
+// any amount of line items
+
+function invoiceTotal(amount1, amount2, amount3, amount4) {
+  return amount1 + amount2 + amount3 + amount4;
+}
+
+invoiceTotal(20, 30, 40, 50);          // works as expected
+invoiceTotal(20, 30, 40, 50, 40, 40);  // does not work; how can you make it work?
+
+// We can use a rest parameter to take in as many arguments
+
+function invoiceTotal(...amount) {
+  return amount.reduce((sum, num) => sum += num, 0);
+}
+
+// Product of Sums
+
+// productOfSums function is expected to return the product of the sums of two
+// arrays of nums. Will it work?
+
+function productOfSums(array1, array2) {
+  var result;
+  result = total(array1) * total(array2);
+  return result;
+}
+
+function total(numbers) {
+  var sum;
+  var i;
+
+  for (i = 0; i < numbers.length; i += 1) {
+    sum += numbers[i];
+  }
+
+  sum;
+}
+
+// It will not work because the function total implicitly return undefined because
+// there is no explicit return value in the function. Also the sum variable in total
+// needs to be set to 0 otherwise it references undefined and when we add numbers to it
+// It will produce NaN.

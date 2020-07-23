@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Student Bookings</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>Bookings</h1>
+    <ul class="bookings">
+      
+    </ul>
+<script>
+function get(url) {
+  return new Promise(resolve => {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/api/' + url);
+    xhr.responseType = 'json';
+    xhr.onload       = () => resolve(xhr.response);
+    xhr.send();
+  });
+}
+
+function createBookings(schedules, staffNames) {
+  schedules.forEach(schedule => {
+    let date         = document.createElement('li');
+    date.textContent = schedule.date;
+
+    let name = staffNames[schedule.staff_id];
+    let info = document.createElement('li');
+    info.textContent         = `${name} | ${schedule.student_email} | ${schedule.time}`;
+    info.style.marginLeft    = '2em';
+    info.style.listStyleType = 'square';
+    info.setAttribute('hidden', true);
+
+    date.appendChild(info);
+    date.onclick = () => date.querySelector('li').toggleAttribute('hidden');
+    document.querySelector('.bookings').appendChild(date);
+  });
+}
+
+(async function() {
+  let [schedules, staffNames] = await Promise.all([get('schedules'), get('staff_members')]);
+  schedules  = schedules.filter(s => s.student_email);
+  staffNames = staffNames.reduce((list, staff) => ({...list, [staff.id]: staff.name}), {});
+
+  createBookings(schedules, staffNames);
+})();
+
+</script>
+  </body>
+</html>

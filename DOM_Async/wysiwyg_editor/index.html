@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WYSIWYG editor</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <script src="https://kit.fontawesome.com/1062785a39.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="editor">
+      <h1>Rich Text Editor</h1>
+      <div id="commands">
+      </div>
+      <div contenteditable="true" id="content">
+      </div>
+    </div>
+
+    <script id="command_buttons" type="text/x-handlebars">
+      {{# each buttons}}
+        <button class="{{class}}" value="{{value}}"></button>
+      {{/each}}
+    </script>
+    <script src="javascript.js"></script>
+  </body>
+</html>

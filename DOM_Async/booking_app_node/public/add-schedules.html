@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Adding Schedules</title>
+    <meta charset="utf-8" />
+    <style>
+      fieldset {
+        box-sizing: border-box;
+        display: flex;
+        padding: 15px 100px;
+        color: red;
+        }
+
+      legend {
+        margin-left: -70px;
+      }
+
+      button {
+        margin: 30px 0;
+        padding: 25px 50px;
+        border-radius: 7px;
+        color: white;
+       }
+
+      #new-schedule {
+        background: lightblue;
+      }
+
+      #submit {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/api/schedules" method="post">
+      <button type="submit" id="new-schedule">Add more schedules</button>
+      <fieldset id="1">
+        <legend>Schedule 1</legend>
+        <label>
+          Staff Name :
+          <select name="staff_id">
+          </select>
+        </label>
+
+        <label>
+          Date :
+          <input name="date" placeholder="mm-dd-yy" />
+        </label>
+
+        <label>
+          Time :
+          <input name="time" placeholder="hh:mm" />
+        </label>
+      </fieldset>
+      <button type="submit" id="submit">Submit</button>
+    </form>
+    <script>
+      function convertFormDataToJSON(formData, inputs = 1) {
+        let count        = 0;
+        let jsonData     = [];
+        let scheduleInfo = {};
+
+        for (let info of formData) {
+          count += 1;
+          scheduleInfo[info[0]] = info[1];
+
+          if (count % inputs === 0) {
+            jsonData.push(scheduleInfo);
+            scheduleInfo = {};
+          }
+        }
+        return JSON.stringify({ schedules: jsonData });
+      }
+      
+      document.addEventListener('DOMContentLoaded', () => {
+        let numOfSchedules = 1;
+        let xhr            = new XMLHttpRequest();
+
+        let form              = document.querySelector('form');
+        let submitButton      = document.querySelector('#submit');
+        let newScheduleButton = document.querySelector('#new-schedule');
+
+        xhr.responseType = 'json';
+        xhr.open('GET', '/api/staff_members');
+
+        xhr.addEventListener('load', event => {
+          let select    = document.querySelector('select');
+          let staffList = xhr.response;
+
+          staffList.forEach(staff => {
+            let option         = document.createElement('option');
+            option.value       = staff.id;
+            option.textContent = staff.name;
+
+            select.appendChild(option);
+          });
+        });
+
+        xhr.send();
+
+        submitButton.addEventListener('click', event => {
+          event.preventDefault();
+          let data = new FormData(form);
+          let xhr  = new XMLHttpRequest();
+
+          xhr.open('POST', form.action);
+          xhr.setRequestHeader('Content-Type', 'application/json');
+
+          xhr.addEventListener('load', event => {
+            if (xhr.status === 201) form.reset();
+            alert(xhr.responseText);
+          });
+
+          xhr.send(convertFormDataToJSON(data, 3));
+        });
+
+        newScheduleButton.addEventListener('click', event => {
+          event.preventDefault();
+
+          let newSchedule = form.querySelector('fieldset').cloneNode(true);
+          numOfSchedules += 1;
+
+          newSchedule.querySelector('legend').textContent = 'Schedule ' + numOfSchedules;
+          submit.insertAdjacentElement('beforebegin', newSchedule);
+        });
+      });
+    </script>
+  </body>
+</html>

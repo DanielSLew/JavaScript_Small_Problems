@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Car Shop With Filtering</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Buy Used Cars</h1>
+      <form id="filters" action="" method="post">
+        <div id="filter_boxes">
+
+        </div>
+        <button type="submit">Filter</button>
+      </form>
+    </header>
+
+    <main>
+      <div id="cars">
+      </div>
+    </main>
+
+    <script id="filter_template" type="text/x-handlebars">
+      <label>{{category}}
+        <select name="{{category}}">
+          <option value="all">All</option>
+          {{#each options}}
+            <option value={{option}}>{{option}}</option>
+          {{/each}}
+        </select>
+      </label>
+    </script>
+
+    <script id="cars_template" type="text/x-handlebars">
+      {{#each cars}}
+        {{> car_template}}
+      {{/each}}
+    </script>
+
+    <script id="car_template" data-type="partial" type="text/x-handlebars">
+      <figure class="car">
+        <div class="car_img">
+          <img src="{{image}}" alt="{{make}} {{model}}">
+        </div>
+        <figcaption>
+          <h4>{{make}} {{model}}</h4>
+          <p>Year: {{year}}</p>
+          <p>Price: {{price}}</p>
+          <button>Buy</button>
+        </figcaption>
+      </figure>
+    </script>
+    <script src="javascript.js"></script>
+  </body>
+</html>

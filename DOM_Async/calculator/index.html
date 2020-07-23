@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JavaScript Calculator</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="calculator">
+      <div id="screen">
+        <p id="operation"></p>
+        <p id="entry"></p>
+      </div>
+      <div id="buttons">
+      </div>
+    </div>
+    <script id="calc" type="text/x-handlebars">
+      {{#each buttons}}
+        <button value="{{this}}">{{this}}</button>
+      {{/each}}
+    </script>
+    <script src="javascript.js"></script>
+  </body>
+</html>

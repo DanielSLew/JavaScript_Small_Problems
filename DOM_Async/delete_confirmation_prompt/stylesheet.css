@@ -1,0 +1,38 @@
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .3);
+}
+
+#confirmation {
+  position: relative;
+  text-align: center;
+  top: 40%;
+}
+
+#contextMenu {
+  display: none;
+  position: fixed;
+  background-color: grey;
+  color: white;
+  border-radius: 5px;
+}
+
+#contextMenu ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#contextMenu li {
+  padding: 3px 20px;
+  font-style: italic;
+}
+
+.highlight {
+  background-color: blue;
+}
+

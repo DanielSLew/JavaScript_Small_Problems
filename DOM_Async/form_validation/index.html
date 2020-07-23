@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Form Validation</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="stylesheet.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>Sign Up Form</h1>
+    <p id="form_error">Fix errors before submitting this form</p>
+    
+    <form action="#" method="post" novalidate>
+      <label>First Name:
+        <input required pattern="[a-zA-Z]+" name="first_name">
+      </label>
+
+      <label>Last Name:
+        <input required pattern="[a-zA-Z]+" name="last_name">
+      </label>
+
+      <label>Email:
+        <input required pattern=".+@.+" placeholder="email@email.com" name="email">
+      </label>
+
+      <label>Phone Number:
+        <input pattern="\d{3}-\d{3}-\d{4}" placeholder="555-555-5555" name="phone_number">
+      </label>
+
+      <label>Credit Card:
+        <div>
+          <input required maxlength="4" name="credit_card">
+          <input required maxlength="4" name="credit_card">
+          <input required maxlength="4" name="credit_card">
+          <input required maxlength="4" name="credit_card">
+        </div>
+      </label>
+
+      <label>Password:
+        <input required type="password" minlength="10" name="password">
+      </label>
+
+      <button type="submit">Sign Up</button>
+    </form>
+    <div id="error_message"></div>
+
+    <div id="submission">
+      <h2>Serialized Form</h2>
+      <p></p>
+    </div>
+    <script src="javascript.js"></script>
+  </body>
+</html>
